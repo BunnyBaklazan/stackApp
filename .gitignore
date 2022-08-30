@@ -24,3 +24,15 @@ hs_err_pid*
 replay_pid*
 
 out/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
