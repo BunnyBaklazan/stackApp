@@ -5,4 +5,6 @@ module com.example.stackapp {
 
     opens com.example.stackapp to javafx.fxml;
     exports com.example.stackapp;
+    exports com.example.stackapp.Controllers;
+    opens com.example.stackapp.Controllers to javafx.fxml;
 }
