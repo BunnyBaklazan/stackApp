@@ -7,13 +7,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class Login extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello! hello");
+        FXMLLoader fxmlLoader = new FXMLLoader(Login.class.getResource("log-in.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 620, 470);
+
+        stage.setTitle("Welcome to the StackApp!");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
