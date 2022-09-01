@@ -32,7 +32,7 @@
             <image>
                <Image url="@IMG/box-png-icon-5.png" />
             </image></ImageView>
-         <Button layoutX="424.0" layoutY="595.0" mnemonicParsing="false" onAction="#switchToScene2" text="Button" />
+         <Button fx:id="Btn1" layoutX="117.0" layoutY="122.0" mnemonicParsing="false" text="Button" />
       </AnchorPane>
    </center>
 </BorderPane>
