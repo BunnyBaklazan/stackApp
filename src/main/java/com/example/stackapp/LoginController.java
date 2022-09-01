@@ -14,6 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.net.URL;
+import java.sql.*;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -44,19 +45,62 @@ public class LoginController implements Initializable {
 
                 if (username.trim().isEmpty() || password.trim().isEmpty()) {
                     System.out.println("Username or password is missing");
-
                     l_errorText.setVisible(true);
-
                     return;
                 }
 
                 l_errorText.setVisible(false);
 
                 // connect to DB
+                Connection connection = null;
+                PreparedStatement preparedStatement = null;
+                ResultSet resultSet = null;
+                try {
+                    connection = DriverManager.getConnection("jdbc:sqlite:stackAppdbv1.db");
+                    preparedStatement = connection.prepareStatement("SELECT password FROM users WHERE USERNAME = ?");
+                    preparedStatement.setString(1, username);
+                    resultSet = preparedStatement.executeQuery();
 
-                // verify user from DB (username and password are correct)
-
-                // change page to list of boxes
+                    if (!resultSet.isBeforeFirst()) {
+                        l_errorText.setText("User is not found!");
+                        l_errorText.setVisible(true);
+                    } else {
+                        while (resultSet.next()) {
+                            String retrievedPassword = resultSet.getString("password");
+                            if (retrievedPassword.equals(password)) {
+                                System.out.println("User found and password is correct.");
+                                // change page to list of boxes
+                            } else {
+                                l_errorText.setText("Passwords did not match!");
+                                l_errorText.setVisible(true);
+                            }
+                        }
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    if(resultSet != null) {
+                        try {
+                            resultSet.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (preparedStatement != null) {
+                        try {
+                            preparedStatement.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (connection != null) {
+                        try {
+                            connection.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
             }
         });
 
